@@ -11,28 +11,5 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Install Black
-        run: |
-          sudo apt update
-          sudo apt install snapd
-          sudo snap install black
-
-      - name: Format Python Files with Black
-        run: |
-          black ./*.py
-
-#      - name: Before run
-#        run: |
-#          git config --unset-all http.https://github.com/.extraheader
-
-      - name: Commit and Push Changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: ${{ github.actor }}
-          author_email: ${{ github.event.inputs.email }}
-          message: "Format Python files with Black"
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          run: |
-            echo ${{ secrets.TOKEN }}
+      - name: Linting
+        uses: psf/black@stable
