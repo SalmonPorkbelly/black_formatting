@@ -1,0 +1,32 @@
+name: black formatting
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+jobs:
+  push-to-another-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Black
+        run: |
+          sudo apt update
+          sudo apt install snapd
+          sudo snap install black
+
+      - name: Format Python Files with Black
+        run: |
+          black ./*.py
+
+      - name: Commit and Push Changes
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: ${{ github.actor }}
+          author_email: ${{ github.event.inputs.email }}
+          message: "Format Python files with Black"
+        env:
+          GITHUB_TOKEN: ${{ secret.TOKEN}}
