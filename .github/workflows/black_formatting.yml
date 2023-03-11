@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  push-to-another-repo:
+  black-formatting:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,6 +21,10 @@ jobs:
       - name: Format Python Files with Black
         run: |
           black ./*.py
+
+      - name: Before run
+        run: |
+            git config —unset-all http.https://github.com/.extraheader
 
       - name: Commit and Push Changes
         uses: EndBug/add-and-commit@v7
